@@ -1,5 +1,3 @@
-# from discord.ext import commands,tasks
-from unicodedata import category
 from dotenv import load_dotenv
 import os
 import discord
