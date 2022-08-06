@@ -14,9 +14,9 @@ async def on_ready():
     print("--------")
     await client.change_presence(activity=discord.Game(name = "under development"))
 
-
-categoryId = 1005107671369793658
-timesId = 1005107765263482930
+load_dotenv()
+categoryId = int(os.environ['categoryId'])
+timesId = int(os.environ['timesId'])
 
 @client.event
 async def on_message(message):
@@ -32,6 +32,6 @@ async def on_message(message):
             for i in message.attachments:
                 await client.get_channel(timesId).send(i)
 
-load_dotenv()
+
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
