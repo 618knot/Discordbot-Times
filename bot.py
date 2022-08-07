@@ -10,12 +10,14 @@ async def on_ready():
     print(client.user.name) #bot name
     print(discord.__version__) #discord.pyのversion
     print("--------")
-    await client.change_presence(activity=discord.Game(name = "under development"))
+    await client.change_presence(activity=discord.Game(name = ""))
 
 load_dotenv()
 categoryId = int(os.environ['categoryId'])
 timesId = int(os.environ['timesId'])
+mokumokuId = int(os.environ['mokumokuId'])
 
+#times投稿
 @client.event
 async def on_message(message):
     #botの送信ははじく
@@ -29,6 +31,12 @@ async def on_message(message):
         if message.attachments:
             for i in message.attachments:
                 await client.get_channel(timesId).send(i)
+
+#もくもく会入室通知
+@client.event
+async def on_voice_state_update(member, before, after):
+    if after.channel.id == mokumokuId and after is not before and after.self_mute is before.self_mute:
+        await client.get_channel(timesId).send("<#" + str(mokumokuId) + ">" + " " + member.name + "\n" + "もくもく会に参加しました")
 
 
 TOKEN = os.environ['TOKEN']
