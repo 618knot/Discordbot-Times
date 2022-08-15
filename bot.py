@@ -35,7 +35,7 @@ async def on_message(message):
 #もくもく会入室通知
 @client.event
 async def on_voice_state_update(member, before, after):
-    if after.channel.id == mokumokuId and after is not before and after.self_mute is before.self_mute:
+    if after.channel.id == mokumokuId and after is not before and after.self_mute is before.self_mute and after.self_stream is before.self_stream and after.self_deaf is before.self_deaf:
         await client.get_channel(timesId).send("<#" + str(mokumokuId) + ">" + " " + member.name + "\n" + "もくもく会に参加しました")
 
 
