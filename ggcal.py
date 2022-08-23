@@ -1,4 +1,3 @@
-from __future__ import print_function
 import datetime
 import os.path
 from googleapiclient.discovery import build
@@ -37,4 +36,4 @@ def calendar_info3():
         ret.append((start, event['summary']))
 
     return ret
-# print(calendar_info3())
+print(calendar_info3())
