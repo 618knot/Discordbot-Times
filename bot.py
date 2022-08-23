@@ -25,6 +25,9 @@ async def on_message(message):
     if message.author.bot:
         return
 
+    if message.content == "calendar":
+        await message.channel.send(calendar_info3()[0][0])
+
     #timesカテゴリのみを監視、timelineチャンネルは無視
     if message.channel.category_id == categoryId and message.channel.id != timesId:
         await client.get_channel(timesId).send(message.channel.mention + " " + message.author.name + "\n" + message.content)
@@ -39,12 +42,7 @@ async def on_voice_state_update(member, before, after):
     if after.channel.id == mokumokuId and after is not before and after.self_mute is before.self_mute and after.self_stream is before.self_stream and after.self_deaf is before.self_deaf:
         await client.get_channel(timesId).send("<#" + str(mokumokuId) + ">" + " " + member.name + "\n" + "もくもく会に参加しました")
 
-@client.event
-async def on_message(message):
-    if message.author.bot:
-        return
-    if message.content == "calendar":
-        await message.channel.send(calendar_info3()[0][0])
+
 
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
