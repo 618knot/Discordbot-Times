@@ -1,4 +1,4 @@
-discord.py
+discord.py==1.7.3
 python-dotenv
 google-api-core==2.8.2
 google-api-python-client==2.57.0
