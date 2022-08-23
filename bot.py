@@ -25,8 +25,8 @@ async def on_message(message):
     if message.author.bot:
         return
 
-    if message.content == "calendar":
-        await message.channel.send(calendar_info3()[0][0])
+    # if message.content == "calendar":
+    #     await message.channel.send(calendar_info3()[0][0])
 
     #timesカテゴリのみを監視、timelineチャンネルは無視
     if message.channel.category_id == categoryId and message.channel.id != timesId:
