@@ -1,3 +1,3 @@
-echo ${json_key} > /app/cistlt-calender.json
+echo ${json_key} > /app/cistlt-calendar.json
 ls
 pwd
