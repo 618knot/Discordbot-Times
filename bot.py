@@ -3,7 +3,7 @@ import os
 import discord
 from ggcal import calendar_info3 
 
-client = discord.Client()
+client = discord.Client(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():

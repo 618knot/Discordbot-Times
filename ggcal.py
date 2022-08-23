@@ -36,4 +36,5 @@ def calendar_info3():
         ret.append((start, event['summary']))
 
     return ret
-print(calendar_info3())
+if __name__ == "__main__":
+    print(calendar_info3())
