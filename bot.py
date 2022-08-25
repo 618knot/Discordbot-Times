@@ -33,6 +33,7 @@ async def on_message(message):
     if message.author.bot:
         return
 
+
     #times投稿
     #timesカテゴリのみを監視、timelineチャンネルは無視
     if message.channel.category_id == categoryId and message.channel.id != timesId:
