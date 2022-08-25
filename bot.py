@@ -69,11 +69,11 @@ async def scheduling_notice():
     if timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3):
         await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[1]}`があります")
 
-    # print(now)
-    # print(sche_datetime)
-    # print(sche_datetime - now)
-    # print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
-    # print("\n")
+    print(now)
+    print(sche_datetime)
+    print(sche_datetime - now)
+    print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
+    print("\n")
 
 
 
