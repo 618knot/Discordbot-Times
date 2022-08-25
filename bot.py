@@ -73,7 +73,7 @@ async def scheduling_notice():
     print(now)
     print(sche_datetime)
     print(sche_datetime - now)
-    print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
+    print(timedelta(days=1,hours=8, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1,hours=9, minutes=0, seconds=3))
     print("\n")
 
 
