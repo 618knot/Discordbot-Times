@@ -8,7 +8,7 @@ from google.auth import load_credentials_from_file
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
-def calendar_info3():
+def calendar_info1():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
     """
@@ -24,17 +24,18 @@ def calendar_info3():
 
     # NOTE: Set your calendar id
     events_result = service.events().list(calendarId='cist.lt.club@gmail.com', timeMin=now,
-                                        maxResults=3, singleEvents=True,
+                                        maxResults=1, singleEvents=True,
                                         orderBy='startTime').execute()
     events = events_result.get('items', [])
 
-    ret = []
+    schedule = []
     if not events:
         return -1
     for event in events:
         start = event['start'].get('dateTime', event['start'].get('date'))
-        ret.append((start, event['summary']))
-
-    return ret
+        schedule.append(start)
+        schedule.append(event['summary'])
+        
+    return schedule
 if __name__ == "__main__":
-    print(calendar_info3())
+    print(calendar_info1())
