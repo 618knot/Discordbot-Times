@@ -59,26 +59,24 @@ async def scheduling_notice():
     global schedule
     global sche_index
     now = datetime.now()
+
+    sche_datetime = to_datetime(schedule[sche_index])
     
+    if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
+        await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[sche_index][1]}`があります")
+
     sche_index = ctrl_index(now, schedule)
     if now.day - day == 1 or sche_index == None:
         print("update\n")
         day = now.day
         schedule = calendar_info3()
         sche_index = ctrl_index(now, schedule)
-    
-    sche_datetime = to_datetime(schedule[sche_index])
-
-    if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
-        await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[sche_index][1]}`があります")
 
     print(now)
     print(sche_datetime)
     print(sche_datetime - now)
     print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
     print("\n")
-
-
 
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
