@@ -4,7 +4,7 @@ import os
 import time
 import discord
 from discord.ext import tasks
-from ggcal import calendar_info1 
+from ggcal import calendar_info3, to_datetime, ctrl_index
 
 client = discord.Client()
 
@@ -33,6 +33,7 @@ async def on_message(message):
     if message.author.bot:
         return
 
+
     #times投稿
     #timesカテゴリのみを監視、timelineチャンネルは無視
     if message.channel.category_id == categoryId and message.channel.id != timesId:
@@ -49,33 +50,33 @@ async def on_voice_state_update(member, before, after):
         await client.get_channel(timesId).send("<#" + str(mokumokuId) + ">" + " " + member.name + "\n" + "もくもく会に参加しました")
 
 #予定通知
-day = datetime.now().day
-schedule = calendar_info1()
+day = (datetime.now()).day
+schedule = calendar_info3()
+sche_index = ctrl_index(datetime.now(), schedule)
 @tasks.loop(seconds=60)
 async def scheduling_notice():
     global day
     global schedule
+    global sche_index
     now = datetime.now()
-    if day - now.day == 1:
-        schedule = calendar_info1()
-        day = datetime.now().day
+
+    sche_datetime = to_datetime(schedule[sche_index])
     
-    day_time = str(schedule[0]).split("T")
-    sche_day = str(day_time[0]).split("-")
-    sche_time = str(day_time[1]).split(":")
+    if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
+        await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[sche_index][1]}`があります")
 
-    sche_datetime = datetime(year=int(sche_day[0]), month=int(sche_day[1]), day=int(sche_day[2]), hour=int(sche_time[0]), minute=int(sche_time[1]))
+    sche_index = ctrl_index(now, schedule)
+    if now.day - day == 1 or sche_index == None:
+        print("update\n")
+        day = now.day
+        schedule = calendar_info3()
+        sche_index = ctrl_index(now, schedule)
 
-    if timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3):
-        await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[1]}`があります")
-
-    # print(now)
-    # print(sche_datetime)
-    # print(sche_datetime - now)
-    # print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
-    # print("\n")
-
-
+    print(now)
+    print(sche_datetime)
+    print(sche_datetime - now)
+    print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
+    print("\n")
 
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
