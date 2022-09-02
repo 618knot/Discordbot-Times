@@ -65,6 +65,8 @@ async def scheduling_notice():
     if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
         await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[sche_index][1]}`があります")
 
+    if timedelta(seconds=0) <= sche_datetime - now + timedelta(seconds=5)<= timedelta(seconds=15):
+        await client.get_channel(noticeId).send(f"今から`{schedule[sche_index][1]}`が始まります")
     sche_index = ctrl_index(now, schedule)
     if now.day - day == 1 or sche_index == None:
         print("update\n")
