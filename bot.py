@@ -26,13 +26,11 @@ timesId = int(os.environ['timesId'])
 mokumokuId = int(os.environ['mokumokuId'])
 noticeId = int(os.environ['noticeId'])
 
-
 @client.event
 async def on_message(message):
     #botの送信ははじく
     if message.author.bot:
         return
-
 
     #times投稿
     #timesカテゴリのみを監視、timelineチャンネルは無視
@@ -52,31 +50,23 @@ async def on_voice_state_update(member, before, after):
 #予定通知
 day = (datetime.now()).day
 schedule = calendar_info3()
-sche_index = ctrl_index(datetime.now(), schedule)
 @tasks.loop(seconds=60)
 async def scheduling_notice():
     global day
     global schedule
-    global sche_index
     now = datetime.now()
-
-    sche_datetime = to_datetime(schedule[sche_index])
     
-    if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
-        await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{schedule[sche_index][1]}`があります")
+    for sche_index in schedule:
+        sche_datetime = to_datetime(sche_index)
+        if timedelta(hours=23, minutes=59, seconds=55) <= sche_datetime - now <= timedelta(days=1, seconds=5):
+            await client.get_channel(noticeId).send(f"`{sche_datetime}`より`{sche_index[1]}`があります")
 
-    sche_index = ctrl_index(now, schedule)
-    if now.day - day == 1 or sche_index == None:
-        print("update\n")
+        if timedelta(seconds=-5) <= sche_datetime - now <= timedelta(seconds=5):
+            await client.get_channel(noticeId).send(f"@everyone 今から`{sche_index[1]}`が始まります")
+    
+    if now.day - day == 1:
         day = now.day
         schedule = calendar_info3()
-        sche_index = ctrl_index(now, schedule)
-
-    print(now)
-    print(sche_datetime)
-    print(sche_datetime - now)
-    print(timedelta(hours=23, minutes=59, seconds=57) <= sche_datetime - now <= timedelta(days=1, seconds=3))
-    print("\n")
 
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
