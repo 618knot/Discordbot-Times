@@ -5,26 +5,32 @@ import time
 import discord
 from discord.ext import tasks
 from ggcal import calendar_info3, to_datetime, ctrl_index
+import json
 
 client = discord.Client()
+
+load_dotenv()
+jsonKey = json.loads(str(os.environ['json_key']))
+categoryId = int(os.environ['categoryId'])
+timesId = int(os.environ['timesId'])
+mokumokuId = int(os.environ['mokumokuId'])
+noticeId = int(os.environ['noticeId'])
+
+with open('.\cistlt-calendar.json', 'w') as f:
+    json.dump(jsonKey, f, ensure_ascii=False, indent=4)
 
 @client.event
 async def on_ready():
     print("on_ready")
     print(client.user.name) #bot name
     print(discord.__version__) #discord.pyのversion
+    
     print("--------")
     print(f"waiting {60 - datetime.now().second} sec for loop to start")
     time.sleep(60 - datetime.now().second)
     scheduling_notice.start()
 
     await client.change_presence(activity=discord.Game(name = ""))
-
-load_dotenv()
-categoryId = int(os.environ['categoryId'])
-timesId = int(os.environ['timesId'])
-mokumokuId = int(os.environ['mokumokuId'])
-noticeId = int(os.environ['noticeId'])
 
 @client.event
 async def on_message(message):
