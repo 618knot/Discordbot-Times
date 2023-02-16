@@ -6,6 +6,7 @@ import discord
 from discord.ext import tasks
 from ggcal import calendar_info3, to_datetime, ctrl_index
 import json
+os.system('ls')
 
 client = discord.Client()
 
