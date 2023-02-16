@@ -16,7 +16,7 @@ timesId = int(os.environ['timesId'])
 mokumokuId = int(os.environ['mokumokuId'])
 noticeId = int(os.environ['noticeId'])
 
-with open('.\cistlt-calendar.json', 'w') as f:
+with open('app\cistlt-calendar.json', 'w') as f:
     json.dump(jsonKey, f, ensure_ascii=False, indent=4)
 
 @client.event
