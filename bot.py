@@ -6,9 +6,7 @@ import discord
 from discord.ext import tasks
 from ggcal import calendar_info3, to_datetime, ctrl_index
 import json
-os.system('ls')
 
-client = discord.Client()
 
 load_dotenv()
 jsonKey = json.loads(str(os.environ['json_key']))
@@ -17,8 +15,13 @@ timesId = int(os.environ['timesId'])
 mokumokuId = int(os.environ['mokumokuId'])
 noticeId = int(os.environ['noticeId'])
 
-with open('app\cistlt-calendar.json', 'w') as f:
+
+with open('cistlt-calendar.json', 'w') as f:
     json.dump(jsonKey, f, ensure_ascii=False, indent=4)
+    
+os.system('ls')
+
+client = discord.Client()
 
 @client.event
 async def on_ready():
