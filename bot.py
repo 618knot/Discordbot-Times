@@ -28,7 +28,7 @@ async def on_ready():
     print("on_ready")
     print(client.user.name) #bot name
     print(discord.__version__) #discord.pyのversion
-    
+    print(datetime.now())
     print("--------")
     print(f"waiting {60 - datetime.now().second} sec for loop to start")
     time.sleep(60 - datetime.now().second)
@@ -77,6 +77,8 @@ async def scheduling_notice():
     if now.day - day == 1:
         day = now.day
         schedule = calendar_info3()
+        print(now)
+        print(schedule)
 
 TOKEN = os.environ['TOKEN']
 client.run(TOKEN)
